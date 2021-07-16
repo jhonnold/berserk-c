@@ -482,7 +482,7 @@ int Negamax(int alpha, int beta, int depth, ThreadData* thread, PV* pv) {
         if (!improving)
           R++;
 
-        if (isPV && ttHit && tt->depth >= depth && !(tt->flags & TT_UPPER))
+        if (isPV && ttHit && tt->depth >= depth && (tt->flags & TT_LOWER))
           R--;
 
         if (MoveCapture(nullThreat) && MoveStart(move) != MoveEnd(nullThreat) && !board->checkers)
