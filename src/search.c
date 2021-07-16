@@ -384,6 +384,10 @@ int Negamax(int alpha, int beta, int depth, ThreadData* thread, PV* pv) {
           return score;
       }
     }
+
+    // Bit Genie's idea
+    if (depth == 1 && hashMove && IsRecapture(data, hashMove))
+      return Quiesce(alpha, beta, thread, pv);
   }
 
   Move quiets[64];
