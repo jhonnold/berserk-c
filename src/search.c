@@ -476,12 +476,14 @@ int Negamax(int alpha, int beta, int depth, ThreadData* thread, PV* pv) {
       } else if (!tactical) {
         // increase reduction on non-pv
         if (!isPV)
-          R += !ttHit || !(tt->flags & TT_EXACT);
+          R++;
 
         // increase reduction if our eval is declining
         if (!improving)
           R++;
 
+        if (isPV && ttHit && tt->depth >= depth && !(tt->flags & TT_UPPER))
+          R--;
 
         if (MoveCapture(nullThreat) && MoveStart(move) != MoveEnd(nullThreat) && !board->checkers)
           R++;
